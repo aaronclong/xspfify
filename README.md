@@ -1,3 +1,7 @@
+[XSPF](https://xspf.org/) generator
+
+## Old Development Notes:
+
 Make sure python 3.0 or later is installed on your machine
 
 Visit https://developer.spotify.com/console/get-playlist-tracks/ and obtain an OAUTH token for your Spotify account. These last a limited amount of time (1 hour?) but you can get another one if it expires
