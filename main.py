@@ -1,10 +1,31 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-
+import argparse
 import codecs
-import requests
+from getpass import getpass
+from pathlib import Path
+# import requests
 from xml.sax.saxutils import escape
 import re
+
+
+parser = argparse.ArgumentParser()
+
+parser.add_argument("-o", "--output", default='output/playlist.xspf')
+
+
+def main():
+   args = parser.parse_args()
+   output_path = Path(args.output)
+   output_path.mkdir(parents=True, exist_ok=True)
+   print(output_path)
+
+
+if __name__ == "__main__":
+    main()
+
+
+
 
 SPOTIFY_BASE_URL = 'https://api.spotify.com'
 OAUTH_TOKEN = ''  # obtain this at https://developer.spotify.com/console/get-playlist-tracks/
