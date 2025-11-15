@@ -3,6 +3,8 @@
 ## Commands
 
 ```
+# Running locally
+uv run python -m main
 # Linting
 uv run ruff format
 ```
