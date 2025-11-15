@@ -1,7 +1,12 @@
 {
-    "editor.formatOnSave": true,
-    "[python]": {
-        "editor.defaultFormatter": "charliermarsh.ruff"
+  "editor.formatOnSave": true,
+  "[python]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "explicit",
+      "source.organizeImports": "explicit"
     },
-    "python.formatting.provider": "ruff"
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "charliermarsh.ruff"
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
 }
