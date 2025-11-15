@@ -3,17 +3,35 @@
 import argparse
 import codecs
 from getpass import getpass
+import logging
 from pathlib import Path
 # import requests
 from xml.sax.saxutils import escape
 import re
-import logging
+import spotipy
+from typing import NamedTuple
+
+class SpotifyClientAuth(NamedTuple):
+    client_id: str
+    client_secret: str
+    redirect_url: str
 
 
 def _setup_logger():
     logging.basicConfig(level=logging.DEBUG)
     logger = logging.getLogger(__name__)
     return logger
+
+def _prompt_credentials() -> SpotifyClientAuth:
+    client_id = getpass('Spotify Client ID: ')
+    client_secret = getpass('Spotify Client Secret: ')
+
+
+    return SpotifyClientAuth(
+        client_id,
+        client_secret,
+        ''
+    )
 
 logger = _setup_logger()
 parser = argparse.ArgumentParser()
@@ -36,6 +54,7 @@ def _handle_output_file(output: str) -> Path:
 
 
 def main():
+    
    args = parser.parse_args()
    output_path = _handle_output_file(args.output)
 
