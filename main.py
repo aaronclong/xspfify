@@ -6,8 +6,10 @@ import re
 from xml.sax.saxutils import escape
 
 import requests
+import spotipy
 
 import core_utils
+from spotify_utils import authenticate_spotify
 
 logger = core_utils.setup_logger()
 parser = argparse.ArgumentParser()
@@ -18,7 +20,12 @@ def main():
     args = parser.parse_args()
     _output_path = core_utils.handle_output_file(args.output)
     creds = core_utils.prompt_credentials()
-    print(creds)
+    auth = authenticate_spotify(creds)
+    sp = spotipy.Spotify(auth_manager=auth)
+    results = sp.current_user_saved_tracks()
+    for idx, item in enumerate(results["items"]):
+        track = item["track"]
+        print(idx, track["artists"][0]["name"], " – ", track["name"])
 
 
 if __name__ == "__main__":
