@@ -1,5 +1,12 @@
 [XSPF](https://xspf.org/) generator
 
+## Commands
+
+```
+# Linting
+uv run ruff format
+```
+
 ## Old Development Notes:
 
 Make sure python 3.0 or later is installed on your machine
@@ -13,13 +20,14 @@ Visit https://developer.spotify.com/console/get-playlist-tracks/ and obtain an O
 - set the value of OUTPUT_PATH to a directory path that exists on your computer
 
 - open the console and navigate to the xspfify directory, then run the following commands, one at a time:
-> python3 -m venv venv
-> source venv/bin/activate
-(venv)> easy_install requests
-(venv)> python
->>> import main
->>> main.backup_playlists_to_xspf()
+  > python3 -m venv venv
+  > source venv/bin/activate
+  > (venv)> easy_install requests
+  > (venv)> python
+  >
+  > > > import main
+  > > > main.backup_playlists_to_xspf()
 
-XSPF is an open source format for portable playlists. (https://www.xspf.org/) 
+XSPF is an open source format for portable playlists. (https://www.xspf.org/)
 
 This script produces a minimal playlist with just artist name and song title, for maximum compatibility. It should be easy to add additional fields to the output, by modifying the get_basic_track_details() method.
