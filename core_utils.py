@@ -5,7 +5,7 @@ from typing import NamedTuple
 
 
 def setup_logger():
-    logging.basicConfig(level=logging.DEBUG)
+    logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger(__package__)
     return logger
 
