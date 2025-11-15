@@ -1,7 +1,14 @@
 [project]
 name = "xspfify"
 version = "0.1.0"
-description = "Add your description here"
+description = "CLI tool to export spotify playlists to flat files"
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "spotipy>=2.25.1",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.14.5",
+]
