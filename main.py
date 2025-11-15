@@ -7,18 +7,37 @@ from pathlib import Path
 # import requests
 from xml.sax.saxutils import escape
 import re
+import logging
 
 
+def _setup_logger():
+    logging.basicConfig(level=logging.DEBUG)
+    logger = logging.getLogger(__name__)
+    return logger
+
+logger = _setup_logger()
 parser = argparse.ArgumentParser()
-
 parser.add_argument("-o", "--output", default='output/playlist.xspf')
+
+
+def _handle_output_file(output: str) -> Path:
+   is_file = output.endswith('.xspf')
+   output_path = Path(output)
+
+   if is_file:
+        logger.info(f'Creating parent folder if doesn\'t exist: "{output_path.parent}"')
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+   else:
+        logger.info(f'Creating output directory if doesn\'t exist: "{output_path}"')
+        output_path.mkdir(parents=True, exist_ok=True)
+        output_path = output_path.joinpath('playlist.xspf')
+
+   return output_path
 
 
 def main():
    args = parser.parse_args()
-   output_path = Path(args.output)
-   output_path.mkdir(parents=True, exist_ok=True)
-   print(output_path)
+   output_path = _handle_output_file(args.output)
 
 
 if __name__ == "__main__":
