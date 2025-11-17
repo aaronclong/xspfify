@@ -8,7 +8,7 @@ from xml.sax.saxutils import escape
 import requests
 
 import core_utils
-from spotify_utils import authenticate_spotify, steam_playlist
+from spotify_utils import authenticate_spotify, get_playlist_tracks, steam_playlist
 
 logger = core_utils.setup_logger()
 parser = argparse.ArgumentParser()
@@ -22,6 +22,9 @@ def main():
     sp = authenticate_spotify(creds)
     playlist = [playlist for playlist in steam_playlist(sp)]
     logger.info(f"There were {len(playlist)} for user")
+
+    for track in get_playlist_tracks(sp, playlist[0]["id"]):
+        logger.info(track)
 
 
 if __name__ == "__main__":
