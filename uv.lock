@@ -151,11 +151,21 @@ wheels = [
 ]
 
 [[package]]
+name = "xspf-lib"
+version = "0.3.4"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/78/eb/90c96d2a94bc52297d66477d6d476b1559b306eba4b0ee557a41cadcf9c7/xspf_lib-0.3.4.tar.gz", hash = "sha256:58ecbbe04dc00444042cb7d4933d796047a7411f4a74f14f7e8ca958b606a223", size = 25476, upload-time = "2023-05-26T10:31:50.462Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/66/2f/4845e975a257910ba422838092a217cdb15409f013073de56bc03ef27a27/xspf_lib-0.3.4-py3-none-any.whl", hash = "sha256:ff5dd25aaae6606a310ca395b9427ded58b16aa96703b0e614e8bc6ee645d75f", size = 13404, upload-time = "2023-05-26T10:31:48.874Z" },
+]
+
+[[package]]
 name = "xspfify"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
     { name = "spotipy" },
+    { name = "xspf-lib" },
 ]
 
 [package.dev-dependencies]
@@ -164,7 +174,10 @@ dev = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "spotipy", specifier = ">=2.25.1" }]
+requires-dist = [
+    { name = "spotipy", specifier = ">=2.25.1" },
+    { name = "xspf-lib", specifier = ">=0.3.4" },
+]
 
 [package.metadata.requires-dev]
 dev = [{ name = "ruff", specifier = ">=0.14.5" }]
