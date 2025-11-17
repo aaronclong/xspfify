@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "spotipy>=2.25.1",
+    "xspf-lib>=0.3.4",
 ]
 
 [dependency-groups]
