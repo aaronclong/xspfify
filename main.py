@@ -1,26 +1,41 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-import argparse
+from pathlib import Path
+
+from spotipy import Spotify
 
 import core_utils
 import xspf_utils
 from spotify_utils import authenticate_spotify, get_playlist_tracks, get_playlists
 
 logger = core_utils.setup_logger()
-parser = argparse.ArgumentParser()
-parser.add_argument("-o", "--output", default="output")
+parser = core_utils.create_arg_parser()
+
+
+def _convert_spotify_playlist_to_xspf(playlist: dict, sp: Spotify, output_path: Path):
+    playlist_name = playlist.get("name")
+    playlist_id = playlist.get("id")
+
+    logger.info(f"Writing {playlist_name} to xspf")
+
+    tracks = [track for track in get_playlist_tracks(sp, playlist_id)]
+    playlist = xspf_utils.playlist_from_spotify_items(playlist_name, tracks)
+    with open(output_path.joinpath(f"{playlist_name}.xspf"), "w+") as fd:
+        fd.write(xspf_utils.playlist_to_xml(playlist))
 
 
 def main():
     args = parser.parse_args()
-    _output_path = core_utils.handle_output_folder(args.output)
+    output_path = core_utils.handle_output_folder(args.output)
     creds = core_utils.prompt_credentials()
     sp = authenticate_spotify(creds)
-    playlist = [playlist for playlist in get_playlists(sp)]
-    logger.info(f"There were {len(playlist)} for user")
-    tracks = [track for track in get_playlist_tracks(sp, playlist[0]["id"])]
-    playlist = xspf_utils.playlist_from_spotify_items(playlist[0].get("name"), tracks)
-    logger.info(xspf_utils.playlist_to_xml(playlist))
+
+    playlists = []
+    for playlist in get_playlists(sp):
+        _convert_spotify_playlist_to_xspf(playlist, sp, output_path)
+        playlists.append(playlist)
+
+    logger.info(f"There were {len(playlists)} for user")
 
 
 if __name__ == "__main__":
