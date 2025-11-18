@@ -1,3 +1,4 @@
+import argparse
 import logging
 from getpass import getpass
 from pathlib import Path
@@ -9,6 +10,12 @@ def setup_logger():
     logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger(__package__)
     return logger
+
+
+def create_arg_parser():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-o", "--output", default="output")
+    return parser
 
 
 logger = setup_logger()
