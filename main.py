@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 from pathlib import Path
 
+from pathvalidate import sanitize_filename
 from spotipy import Spotify
 
 import core_utils
@@ -20,7 +21,9 @@ def _convert_spotify_playlist_to_xspf(playlist: dict, sp: Spotify, output_path: 
 
     tracks = [track for track in get_playlist_tracks(sp, playlist_id)]
     playlist = xspf_utils.playlist_from_spotify_items(playlist_name, tracks)
-    with open(output_path.joinpath(f"{playlist_name}.xspf"), "w+") as fd:
+
+    output_file = sanitize_filename(f"{playlist_name}.xspf")
+    with open(output_path.joinpath(output_file), "w+") as fd:
         fd.write(xspf_utils.playlist_to_xml(playlist))
 
 
