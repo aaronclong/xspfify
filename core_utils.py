@@ -46,16 +46,9 @@ def prompt_credentials() -> SpotifyClientAuth:
     return SpotifyClientAuth(client_id, client_secret, redirect_url)
 
 
-def handle_output_file(output: str) -> Path:
-    is_file = output.endswith(".xspf")
+def handle_output_folder(output: str) -> Path:
     output_path = Path(output)
-
-    if is_file:
-        logger.info(f'Creating parent folder if doesn\'t exist: "{output_path.parent}"')
-        output_path.parent.mkdir(parents=True, exist_ok=True)
-    else:
-        logger.info(f'Creating output directory if doesn\'t exist: "{output_path}"')
-        output_path.mkdir(parents=True, exist_ok=True)
-        output_path = output_path.joinpath("playlist.xspf")
+    logger.info(f'Creating output directory if doesn\'t exist: "{output_path}"')
+    output_path.mkdir(parents=True, exist_ok=True)
 
     return output_path

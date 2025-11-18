@@ -8,12 +8,12 @@ from spotify_utils import authenticate_spotify, get_playlist_tracks, get_playlis
 
 logger = core_utils.setup_logger()
 parser = argparse.ArgumentParser()
-parser.add_argument("-o", "--output", default="output/playlist.xspf")
+parser.add_argument("-o", "--output", default="output")
 
 
 def main():
     args = parser.parse_args()
-    _output_path = core_utils.handle_output_file(args.output)
+    _output_path = core_utils.handle_output_folder(args.output)
     creds = core_utils.prompt_credentials()
     sp = authenticate_spotify(creds)
     playlist = [playlist for playlist in get_playlists(sp)]
