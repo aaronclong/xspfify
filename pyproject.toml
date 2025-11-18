@@ -5,6 +5,7 @@ description = "CLI tool to export spotify playlists to flat files"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "pathvalidate>=3.3.1",
     "spotipy>=2.25.1",
     "xspf-lib>=0.3.4",
 ]
