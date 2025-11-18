@@ -18,7 +18,7 @@ def authenticate_spotify(
     return Spotify(auth_manager=oauth)
 
 
-def steam_playlist(sp: Spotify, *, limit=50, offset=0):
+def get_playlists(sp: Spotify, *, limit=50, offset=0):
     page = sp.current_user_playlists(limit, offset)
     total = page["total"]
     items = page["items"]
