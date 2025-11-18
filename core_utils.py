@@ -1,7 +1,8 @@
 import logging
 from getpass import getpass
 from pathlib import Path
-from typing import NamedTuple
+
+from dtos import SpotifyClientAuth
 
 
 def setup_logger():
@@ -11,12 +12,6 @@ def setup_logger():
 
 
 logger = setup_logger()
-
-
-class SpotifyClientAuth(NamedTuple):
-    client_id: str
-    client_secret: str
-    redirect_url: str
 
 
 def _prompt_redirect_url() -> str:

@@ -3,8 +3,7 @@ from typing import Mapping, Optional
 from spotipy import Spotify
 from spotipy.oauth2 import SpotifyOAuth
 
-from core_utils import SpotifyClientAuth
-from dtos import TrackInfo
+from dtos import SpotifyClientAuth, TrackInfo
 
 
 def authenticate_spotify(
@@ -20,9 +19,9 @@ def authenticate_spotify(
 
 
 def steam_playlist(sp: Spotify, *, limit=50, offset=0):
-    playlist = sp.current_user_playlists(limit, offset)
-    total = playlist["total"]
-    items = playlist["items"]
+    page = sp.current_user_playlists(limit, offset)
+    total = page["total"]
+    items = page["items"]
     cur = len(items)
 
     yield from items
@@ -31,9 +30,8 @@ def steam_playlist(sp: Spotify, *, limit=50, offset=0):
         return
 
     while cur < total:
-        offset += 1
-        playlist = sp.current_user_playlists(limit, offset)
-        items = playlist["items"]
+        page = sp.next(page)
+        items = page["items"]
         cur += len(items)
         yield from items
 
