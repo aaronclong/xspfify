@@ -1,7 +1,10 @@
+from typing import Mapping, Optional
+
 from spotipy import Spotify
 from spotipy.oauth2 import SpotifyOAuth
 
 from core_utils import SpotifyClientAuth
+from dtos import TrackInfo
 
 
 def authenticate_spotify(
@@ -35,6 +38,13 @@ def steam_playlist(sp: Spotify, *, limit=50, offset=0):
         yield from items
 
 
+def _first_artist(track: Mapping) -> Optional[str]:
+    artists = track.get("artists") or []
+    if not artists:
+        return None
+    return (artists[0] or {}).get("name")
+
+
 # https://spotipy.readthedocs.io/en/2.25.1/index.html#spotipy.client.Spotify.playlist_items
 def get_playlist_tracks(sp: Spotify, playlist_id: str, *, limit=100, offset=0):
     # Only request the fields we need to keep payloads small while paging
@@ -46,19 +56,13 @@ def get_playlist_tracks(sp: Spotify, playlist_id: str, *, limit=100, offset=0):
     while cur < total:
         items = page["items"]
         cur += len(items)
-        yield from items
+
+        for item in items:
+            track = item.get("track") or {}
+            artists = _first_artist(track)
+            yield TrackInfo(
+                title=track.get("name"),
+                artist=artists,
+                album=(track.get("album") or {}).get("name"),
+            )
         page = sp.next(page)
-
-        # for item in items:
-        #     track = item.get("track") or {}
-        #     artists = track.get("artists") or []
-        #     yield {
-        #         "title": track.get("name"),
-        #         "artist": artists[0]["name"] if artists else None,
-        #         "album": (track.get("album") or {}).get("name"),
-        #     }
-
-        # Stop when we've exhausted the collection
-        # offset = page.get("offset", offset) + page.get("limit", limit)
-        # if offset >= total or not page.get("next"):
-        #     break
