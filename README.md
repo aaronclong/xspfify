@@ -1,35 +1,47 @@
-[XSPF](https://xspf.org/) generator
+# XSPF generator
 
-## Commands
+CLI to export your Spotify playlists to [XSPF](https://xspf.org/) files for portable backups.
 
-```
-# Running locally
-uv run python -m main
-# Linting
-uv run ruff format
-```
+## Prerequisites
 
-## Old Development Notes:
+- Python 3.12+
+- [uv](https://docs.astral.sh/uv/) for dependency management and virtualenvs
+- A Spotify application (create one in https://developer.spotify.com/dashboard) to obtain a Client ID, Client Secret, and Redirect URL
 
-Make sure python 3.0 or later is installed on your machine
+## Getting started
 
-Visit https://developer.spotify.com/console/get-playlist-tracks/ and obtain an OAUTH token for your Spotify account. These last a limited amount of time (1 hour?) but you can get another one if it expires
+1) Install uv if you do not already have it:
+   ```bash
+   curl -LsSf https://astral.sh/uv/install.sh | sh
+   ```
+2) Install dependencies into a uv-managed virtual environment:
+   ```bash
+   uv sync
+   ```
+3) Run the exporter (uv will activate the env automatically):
+   ```bash
+   uv run python -m main -o output
+   ```
+   - You will be prompted for your Spotify Client ID, Client Secret, and Redirect URL. The redirect URL must match one configured for your Spotify app (e.g. `http://127.0.0.1:8000/callback`).
+   - Playlists will be written as `.xspf` files into the folder provided by `-o` (defaults to `./output`).
 
-- in a text editor, open the xspfify/main.py file and edit the following values:
+## Development workflows
 
-- set the value of OAUTH_TOKEN to the value obtained above
-- set the value of SPOTIFY_USERNAME to your username (otherwise you'll end up with copies of my playlists!)
-- set the value of OUTPUT_PATH to a directory path that exists on your computer
+- Format / lint:
+  ```bash
+  uv run ruff format .
+  uv run ruff check .
+  ```
+- Add new dependencies:
+  ```bash
+  uv add package-name
+  uv add --group dev dev-package-name
+  ```
+- Update all locked dependencies:
+  ```bash
+  uv lock --upgrade
+  ```
 
-- open the console and navigate to the xspfify directory, then run the following commands, one at a time:
-  > python3 -m venv venv
-  > source venv/bin/activate
-  > (venv)> easy_install requests
-  > (venv)> python
-  >
-  > > > import main
-  > > > main.backup_playlists_to_xspf()
+## Notes
 
-XSPF is an open source format for portable playlists. (https://www.xspf.org/)
-
-This script produces a minimal playlist with just artist name and song title, for maximum compatibility. It should be easy to add additional fields to the output, by modifying the get_basic_track_details() method.
+The generated playlists include artist, album, and track title for broad compatibility. Extend the payload by updating the `get_playlist_tracks` pipeline in `spotify_utils.py` and `playlist_from_spotify_items` in `xspf_utils.py`.
