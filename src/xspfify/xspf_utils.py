@@ -7,7 +7,7 @@ from xml.etree import ElementTree as ET
 
 from xspf_lib import Playlist, Track
 
-from dtos import TrackInfo
+from .dtos import TrackInfo
 
 
 def spotify_item_to_track(item: TrackInfo) -> Track:

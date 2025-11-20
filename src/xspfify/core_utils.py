@@ -3,7 +3,7 @@ import logging
 from getpass import getpass
 from pathlib import Path
 
-from dtos import SpotifyClientAuth
+from .dtos import SpotifyClientAuth
 
 
 def setup_logger():

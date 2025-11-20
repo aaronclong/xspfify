@@ -5,9 +5,12 @@ from pathlib import Path
 from pathvalidate import sanitize_filename
 from spotipy import Spotify
 
-import core_utils
-import xspf_utils
-from spotify_utils import authenticate_spotify, get_playlist_tracks, get_playlists
+from . import core_utils, xspf_utils
+from .spotify_utils import (
+    authenticate_spotify,
+    get_playlist_tracks,
+    get_playlists,
+)
 
 logger = core_utils.setup_logger()
 parser = core_utils.create_arg_parser()
