@@ -1,5 +1,6 @@
 output/
 .creds
+*.zip
 
 # Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,windows,linux,macos,python,jetbrains+all
 # Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,windows,linux,macos,python,jetbrains+all
