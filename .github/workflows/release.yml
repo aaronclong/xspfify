@@ -34,5 +34,9 @@ jobs:
       - name: Smoke test (source distribution)
         run: uv run --isolated --no-project --with dist/*.tar.gz tests/smoke_test.py
 
+      # https://github.com/marketplace/actions/pypi-publish
+      - name: Publish package distributions to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+
       - name: Publish
         run: uv publish
