@@ -21,6 +21,13 @@ jobs:
       - name: Install Python 3.13
         run: uv python install 3.13
 
+      - name: Set package version from tag
+        run: |
+          VERSION="${{ github.ref_name }}"
+          VERSION="${VERSION#v}"
+          echo "Bumping version to $VERSION"
+          uvx --from=toml-cli toml set --toml-path=pyproject.toml project.version "$VERSION"
+
       - name: Build
         run: uv build
 
