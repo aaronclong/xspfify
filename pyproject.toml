@@ -1,6 +1,10 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
 [project]
 name = "xspfify"
-version = "0.1.0"
+version = "0.0.1"
 description = "CLI tool to export spotify playlists to flat files"
 readme = "README.md"
 requires-python = ">=3.12"
@@ -10,7 +14,23 @@ dependencies = [
     "xspf-lib>=0.3.4",
 ]
 
+[project.urls]
+homepage = "https://github.com/aaronclong/xspfify"
+
+[project.scripts]
+xspfify = "xspfify.main:main"
+
 [dependency-groups]
 dev = [
     "ruff>=0.14.5",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/xspfify"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "src/xspfify",
+    "README.md",
+    "LICENSE",
 ]

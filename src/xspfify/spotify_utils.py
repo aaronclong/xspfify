@@ -3,7 +3,7 @@ from typing import Mapping, Optional
 from spotipy import Spotify
 from spotipy.oauth2 import SpotifyOAuth
 
-from dtos import SpotifyClientAuth, TrackInfo
+from .dtos import SpotifyClientAuth, TrackInfo
 
 
 def authenticate_spotify(
