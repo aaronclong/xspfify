@@ -15,7 +15,7 @@ dependencies = [
 ]
 
 [project.urls]
-homepage = "https://github.com/aaronlong/xspfify"
+homepage = "https://github.com/aaronclong/xspfify"
 
 [project.scripts]
 xspfify = "xspfify.main:main"
