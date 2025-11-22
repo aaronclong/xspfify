@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: release
+      url: https://pypi.org/p/xspfify
     permissions:
       id-token: write
       contents: read
